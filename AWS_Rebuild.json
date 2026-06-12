@@ -1,0 +1,1958 @@
+{
+  "info": {
+    "_postman_id": "c406759d-979c-433f-bab2-082be963e640",
+    "name": "AWS_Rebuild",
+    "description": "Postman collection generated from AeroSuite.AWS API Swagger spec\nSource: https://dev-aws-backend-app-dthabehrajb6fpbm.westus2-01.azurewebsites.net/swagger/index.html",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "55598985",
+    "_collection_link": "https://go.postman.co/collection/55598985-c406759d-979c-433f-bab2-082be963e640?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login",
+          "item": [
+            {
+              "name": "POST login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": \"string\",\n  \"password\": \"string\",\n  \"deviceToken\": \"string\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/auth/login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "logout",
+          "item": [
+            {
+              "name": "POST logout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"string\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/auth/logout",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "logout"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "item": [
+            {
+              "name": "POST refresh",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refreshToken\": \"string\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/auth/refresh",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "refresh"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "web-login",
+          "item": [
+            {
+              "name": "POST web-login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accessToken\": null,\n  \"idToken\": null\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/auth/web-login",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "web-login"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "training-certificates",
+      "item": [
+        {
+          "name": "deleted",
+          "item": [
+            {
+              "name": "GET deleted",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/deleted",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    "deleted"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "disabled": true
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "training-certificates",
+          "item": [
+            {
+              "name": "POST training-certificates",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Certificate.CertificateName",
+                      "type": "text",
+                      "value": "string"
+                    },
+                    {
+                      "key": "Certificate.CertificateUserId",
+                      "type": "text",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "Certificate.TrainingDate",
+                      "type": "text",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "Certificate.AirportId",
+                      "type": "text",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "Certificate.RenewalDate",
+                      "type": "text",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "Certificate.DaysUntilRenewal",
+                      "type": "text",
+                      "value": "0"
+                    },
+                    {
+                      "key": "File",
+                      "type": "file",
+                      "value": null
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET training-certificates",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates"
+                  ],
+                  "query": [
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "disabled": true
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "GET {id}",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    ":id"
+                  ],
+                  "query": [
+                    {
+                      "key": "trainingCertificateId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT {id}",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "Certificate.CertificateName",
+                      "type": "text",
+                      "value": "string"
+                    },
+                    {
+                      "key": "Certificate.CertificateUserId",
+                      "type": "text",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "Certificate.TrainingDate",
+                      "type": "text",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "Certificate.AirportId",
+                      "type": "text",
+                      "value": "00000000-0000-0000-0000-000000000000"
+                    },
+                    {
+                      "key": "Certificate.RenewalDate",
+                      "type": "text",
+                      "value": "2025-01-01T00:00:00Z"
+                    },
+                    {
+                      "key": "Certificate.DaysUntilRenewal",
+                      "type": "text",
+                      "value": "0"
+                    },
+                    {
+                      "key": "File",
+                      "type": "file",
+                      "value": null
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    ":id"
+                  ],
+                  "query": [
+                    {
+                      "key": "trainingCertificateId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE {id}",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    ":id"
+                  ],
+                  "query": [
+                    {
+                      "key": "trainingCertificateId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "{id}/hard-delete",
+          "item": [
+            {
+              "name": "DELETE {id}/hard-delete",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/:id/hard-delete",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    ":id",
+                    "hard-delete"
+                  ],
+                  "query": [
+                    {
+                      "key": "trainingCertificateId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "{id}/recover",
+          "item": [
+            {
+              "name": "PATCH {id}/recover",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/:id/recover",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    ":id",
+                    "recover"
+                  ],
+                  "query": [
+                    {
+                      "key": "trainingCertificateId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": ""
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT {id}/recover",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/training-certificates/:id/recover",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "training-certificates",
+                    ":id",
+                    "recover"
+                  ],
+                  "query": [
+                    {
+                      "key": "trainingCertificateId",
+                      "value": "00000000-0000-0000-0000-000000000000",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "users",
+          "item": [
+            {
+              "name": "LAWA - Create JMASG  Admin User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7CB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Full Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "LAWA - Create APD Admin User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7CB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Schedule Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "LAWA - Create Dispatcher User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7CB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"24h Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "LAWA - Create Screening Co. Supervisor User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7CB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Supervisor Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "LAWA Create Screening Co. Screener User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7CB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Screener Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "BUR - Create Admin User",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7DB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Full Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "BUR - Create Screening Co. Admin - VI",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7DB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Unknown\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "BUR - Create Screening Co. Admin - EC",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7DB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Unknown\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "BUR - Create Screening Co. Admin - CG",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7DB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Unknown\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "BUR - Create Screening Co. Screener",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"7DB0D7F9-8B50-F111-8FCB-000D3AF5653D\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Screener Access\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "GET users",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "exec": [
+                      "if (!pm.request.headers.has('Authorization')) {\r",
+                      "    pm.request.headers.add({\r",
+                      "        key: 'Authorization',\r",
+                      "        value: 'Bearer ' + pm.collectionVariables.get('accessToken')\r",
+                      "    });\r",
+                      "}"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "\r",
+                      "pm.test(\"Status code is successful\", function () {\r",
+                      "    pm.expect(pm.response.code).to.be.oneOf([200,201,204]);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response time is less than 3 seconds\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+                      "});\r",
+                      "\r",
+                      "pm.test(\"Response has JSON body when applicable\", function () {\r",
+                      "    if(pm.response.text()){\r",
+                      "        pm.response.to.be.json;\r",
+                      "    }\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "Query",
+                      "value": "string",
+                      "disabled": true
+                    },
+                    {
+                      "key": "PageNumber",
+                      "value": "0",
+                      "disabled": true
+                    },
+                    {
+                      "key": "PageSize",
+                      "value": "0",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "{id}",
+          "item": [
+            {
+              "name": "GET {id}",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "PUT {id}",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"airportId\": \"00000000-0000-0000-0000-000000000000\",\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"email\": null,\n  \"department\": \"Unknown\",\n  \"position\": null,\n  \"accessType\": \"Unknown\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "DELETE {id}",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "{id}/access",
+          "item": [
+            {
+              "name": "GET {id}/access",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users/:id/access",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id",
+                    "access"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "{id}/status",
+          "item": [
+            {
+              "name": "PATCH {id}/status",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"Activate\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/v1/users/:id/status",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":id",
+                    "status"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://dev-aws-backend-app-dthabehrajb6fpbm.westus2-01.azurewebsites.net"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    }
+  ]
+}
