@@ -1,0 +1,177 @@
+info:
+  name: GET {id}/access
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/users/:id/access"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: ed4400b0-8c50-f111-8fcb-000d3af5653d
+      type: path
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: "const response = res.getBody();\r
+
+        \r
+
+        test(\"Status code is 200\", function () {\r
+
+        \    expect(res.getStatus()).to.equal(200);\r
+
+        });\r
+
+        \r
+
+        test(\"Response time is less than 3 sec\", function () {\r
+
+        \    expect(res.getResponseTime()).to.be.below(3000);\r
+
+        });\r
+
+        \r
+
+        test(\"Success should be true\", function () {\r
+
+        \    expect(response.success).to.eql(true);\r
+
+        });\r
+
+        \r
+
+        test(\"Response contains required fields\", function () {\r
+
+        \r
+
+        \    expect(response).to.have.property(\"success\");\r
+
+        \    expect(response).to.have.property(\"message\");\r
+
+        \    expect(response).to.have.property(\"timestamp\");\r
+
+        \    expect(response).to.have.property(\"data\");\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"Access object contains required fields\", function () {\r
+
+        \r
+
+        \    expect(response.data).to.have.property(\"userId\");\r
+
+        \    expect(response.data).to.have.property(\"airportId\");\r
+
+        \    expect(response.data).to.have.property(\"isSystemAdmin\");\r
+
+        \    expect(response.data).to.have.property(\"accessTypeId\");\r
+
+        \    expect(response.data).to.have.property(\"accessType\");\r
+
+        \    expect(response.data).to.have.property(\"teams\");\r
+
+        \    expect(response.data).to.have.property(\"roles\");\r
+
+        \    expect(response.data).to.have.property(\"permissions\");\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"Validate data types\", function () {\r
+
+        \r
+
+        \    expect(response.data.userId).to.be.a(\"string\");\r
+
+        \    expect(response.data.airportId).to.be.a(\"string\");\r
+
+        \    expect(response.data.isSystemAdmin).to.be.a(\"boolean\");\r
+
+        \    expect(response.data.accessTypeId).to.be.a(\"number\");\r
+
+        \    expect(response.data.accessType).to.be.a(\"string\");\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"Teams, Roles and Permissions should be arrays\", function () {\r
+
+        \r
+
+        \    expect(response.data.teams).to.be.an(\"array\");\r
+
+        \    expect(response.data.roles).to.be.an(\"array\");\r
+
+        \    expect(response.data.permissions).to.be.an(\"array\");\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"UserId should be valid UUID\", function () {\r
+
+        \r
+
+        \    const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;\r
+
+        \r
+
+        \    expect(response.data.userId).to.match(uuidRegex);\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"AirportId should be valid UUID\", function () {\r
+
+        \r
+
+        \    const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;\r
+
+        \r
+
+        \    expect(response.data.airportId).to.match(uuidRegex);\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"Errors array should be empty\", function () {\r
+
+        \r
+
+        \    expect(response.errors).to.be.an(\"array\");\r
+
+        \    expect(response.errors.length).to.eql(0);\r
+
+        \r
+
+        });"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

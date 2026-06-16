@@ -1,0 +1,67 @@
+info:
+  name: 400 / Create user with extremely long name strings
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/v1/users"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  body:
+    type: json
+    data: |-
+      {
+        "airportId": "7CB0D7F9-8B50-F111-8FCB-000D3AF5653D",
+        "firstName": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "lastName": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "email": "longname@lawa.org",
+        "department": "Field",
+        "position": "Screener",
+        "accessType": "Screener"
+      }
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: "if (!req.headerList.has('Authorization')) {\r
+
+        \    req.setHeader('Authorization', 'Bearer ' + bru.getCollectionVar('accessToken'));\r
+
+        }"
+    - type: after-response
+      code: "test(\"Status code is successful\", function () {\r
+
+        \    expect(res.getStatus()).to.be.oneOf([200,201,204]);\r
+
+        });\r
+
+        \r
+
+        test(\"Response time is less than 3 seconds\", function () {\r
+
+        \    expect(res.getResponseTime()).to.be.below(3000);\r
+
+        });\r
+
+        \r
+
+        test(\"Response has JSON body when applicable\", function () {\r
+
+        \    if(JSON.stringify(res.getBody())){\r
+
+        \        pm.response.to.be.json;\r
+
+        \    }\r
+
+        });"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

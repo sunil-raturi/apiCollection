@@ -1,0 +1,36 @@
+info:
+  name: 200 / Update all fields - LAWA Super Admin
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/users/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "airportId": "00000000-0000-0000-0000-000000000000",
+        "firstName": "string",
+        "lastName": "string",
+        "email": null,
+        "department": "Unknown",
+        "position": null,
+        "accessType": "Unknown"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

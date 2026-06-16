@@ -1,0 +1,183 @@
+info:
+  name: GET users wrong parameter
+  type: http
+  seq: 5
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/users?email=mukesh.s.rathor@itt-aerosuite.co.in"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: email
+      value: mukesh.s.rathor@itt-aerosuite.co.in
+      type: query
+    - name: Query
+      value: string
+      type: query
+      disabled: true
+    - name: PageNumber
+      value: "0"
+      type: query
+      disabled: true
+    - name: PageSize
+      value: "0"
+      type: query
+      disabled: true
+  body:
+    type: json
+    data: ""
+
+runtime:
+  scripts:
+    - type: before-request
+      code: "if (!req.headerList.has('Authorization')) {\r
+
+        \    req.setHeader('Authorization', 'Bearer ' + bru.getCollectionVar('accessToken'));\r
+
+        }"
+    - type: after-response
+      code: "const response = res.getBody();\r
+
+        \r
+
+        test(\"Status code is 200\", function () {\r
+
+        \    expect(res.getStatus()).to.equal(200);\r
+
+        });\r
+
+        \r
+
+        test(\"Response time is less than 3 sec\", function () {\r
+
+        \    expect(res.getResponseTime()).to.be.below(3000);\r
+
+        });\r
+
+        \r
+
+        test(\"Success should be true\", function () {\r
+
+        \    expect(response.success).to.eql(true);\r
+
+        });\r
+
+        \r
+
+        test(\"Response schema validation\", function () {\r
+
+        \r
+
+        \    expect(response).to.have.property(\"success\");\r
+
+        \    expect(response).to.have.property(\"message\");\r
+
+        \    expect(response).to.have.property(\"traceId\");\r
+
+        \    expect(response).to.have.property(\"timestamp\");\r
+
+        \    expect(response).to.have.property(\"data\");\r
+
+        \r
+
+        \    expect(response.data).to.have.property(\"items\");\r
+
+        \    expect(response.data).to.have.property(\"totalCount\");\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"Items should be array\", function () {\r
+
+        \    expect(response.data.items).to.be.an(\"array\");\r
+
+        });\r
+
+        \r
+
+        test(\"User object contains required fields\", function () {\r
+
+        \r
+
+        \    if(response.data.items.length > 0){\r
+
+        \r
+
+        \        let user = response.data.items[0];\r
+
+        \r
+
+        \        expect(user).to.have.property(\"userId\");\r
+
+        \        expect(user).to.have.property(\"firstName\");\r
+
+        \        expect(user).to.have.property(\"lastName\");\r
+
+        \        expect(user).to.have.property(\"email\");\r
+
+        \        expect(user).to.have.property(\"status\");\r
+
+        \    }\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"Email format validation\", function () {\r
+
+        \r
+
+        \    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\r
+
+        \r
+
+        \    response.data.items.forEach(user => {\r
+
+        \r
+
+        \        if(user.email){\r
+
+        \            expect(user.email).to.match(emailRegex);\r
+
+        \        }\r
+
+        \r
+
+        \    });\r
+
+        \r
+
+        });\r
+
+        \r
+
+        test(\"UserId should be UUID\", function () {\r
+
+        \r
+
+        \    const uuidRegex = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;\r
+
+        \r
+
+        \    response.data.items.forEach(user => {\r
+
+        \        expect(user.userId).to.match(uuidRegex);\r
+
+        \    });\r
+
+        \r
+
+        });"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

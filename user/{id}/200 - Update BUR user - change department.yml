@@ -1,0 +1,36 @@
+info:
+  name: 200 / Update BUR user - change department
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/users/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "airportId": "A1B2C3D4-1234-5678-ABCD-000D3AF5AAAA",
+        "firstName": "Grace",
+        "lastName": "Novak",
+        "email": "grace.novak@bur.aero",
+        "department": "Security",
+        "position": "Allied Admin",
+        "accessType": "Allied Admin AWS"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

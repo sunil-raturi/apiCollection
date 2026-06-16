@@ -1,0 +1,85 @@
+info:
+  name: PUT {id}
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/training-certificates/:id"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: trainingCertificateId
+      value: 00000000-0000-0000-0000-000000000000
+      type: query
+      disabled: true
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: multipart-form
+    data:
+      - name: Certificate.CertificateName
+        type: text
+        value: string
+      - name: Certificate.CertificateUserId
+        type: text
+        value: 00000000-0000-0000-0000-000000000000
+      - name: Certificate.TrainingDate
+        type: text
+        value: 2025-01-01T00:00:00Z
+      - name: Certificate.AirportId
+        type: text
+        value: 00000000-0000-0000-0000-000000000000
+      - name: Certificate.RenewalDate
+        type: text
+        value: 2025-01-01T00:00:00Z
+      - name: Certificate.DaysUntilRenewal
+        type: text
+        value: "0"
+      - name: File
+        type: file
+        value: []
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: "if (!req.headerList.has('Authorization')) {\r
+
+        \    req.setHeader('Authorization', 'Bearer ' + bru.getCollectionVar('accessToken'));\r
+
+        }"
+    - type: after-response
+      code: "test(\"Status code is successful\", function () {\r
+
+        \    expect(res.getStatus()).to.be.oneOf([200,201,204]);\r
+
+        });\r
+
+        \r
+
+        test(\"Response time is less than 3 seconds\", function () {\r
+
+        \    expect(res.getResponseTime()).to.be.below(3000);\r
+
+        });\r
+
+        \r
+
+        test(\"Response has JSON body when applicable\", function () {\r
+
+        \    if(JSON.stringify(res.getBody())){\r
+
+        \        pm.response.to.be.json;\r
+
+        \    }\r
+
+        });"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

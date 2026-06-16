@@ -1,0 +1,26 @@
+info:
+  name: PUT {id}/recover
+  type: http
+  seq: 2
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/training-certificates/:id/recover"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: trainingCertificateId
+      value: 00000000-0000-0000-0000-000000000000
+      type: query
+      disabled: true
+    - name: id
+      value: ""
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

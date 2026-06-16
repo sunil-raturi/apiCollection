@@ -1,0 +1,36 @@
+info:
+  name: 200 /  Update with same data — no actual change
+  type: http
+  seq: 8
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/users/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "airportId": "7CB0D7F9-8B50-F111-8FCB-000D3AF5653D",
+        "firstName": "Alice",
+        "lastName": "Morgan",
+        "email": "alice.morgan@lawa.org",
+        "department": "Operations",
+        "position": "Super Admin",
+        "accessType": "Full Access"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

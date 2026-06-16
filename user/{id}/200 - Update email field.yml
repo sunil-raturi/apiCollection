@@ -1,0 +1,36 @@
+info:
+  name: 200 / Update email field
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/users/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "airportId": "7CB0D7F9-8B50-F111-8FCB-000D3AF5653D",
+        "firstName": "Carol",
+        "lastName": "Singh",
+        "email": "new.email@lawa.org",
+        "department": "APD",
+        "position": "APD Support",
+        "accessType": "APD Support"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

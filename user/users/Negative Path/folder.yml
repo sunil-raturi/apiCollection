@@ -1,0 +1,7 @@
+info:
+  name: Negative Path
+  type: folder
+  seq: 6
+
+request:
+  auth: inherit

@@ -1,0 +1,62 @@
+info:
+  name: GET deleted
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/v1/training-certificates/deleted"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: PageNumber
+      value: "0"
+      type: query
+      disabled: true
+    - name: PageSize
+      value: "0"
+      type: query
+      disabled: true
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: before-request
+      code: "if (!req.headerList.has('Authorization')) {\r
+
+        \    req.setHeader('Authorization', 'Bearer ' + bru.getCollectionVar('accessToken'));\r
+
+        }"
+    - type: after-response
+      code: "test(\"Status code is successful\", function () {\r
+
+        \    expect(res.getStatus()).to.be.oneOf([200,201,204]);\r
+
+        });\r
+
+        \r
+
+        test(\"Response time is less than 3 seconds\", function () {\r
+
+        \    expect(res.getResponseTime()).to.be.below(3000);\r
+
+        });\r
+
+        \r
+
+        test(\"Response has JSON body when applicable\", function () {\r
+
+        \    if(JSON.stringify(res.getBody())){\r
+
+        \        pm.response.to.be.json;\r
+
+        \    }\r
+
+        });"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -1,0 +1,39 @@
+opencollection: 1.0.0
+
+info:
+  name: AWS_Rebuild - 9
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  auth:
+    type: bearer
+    token: "{{accessToken}}"
+  variables:
+    - name: baseUrl
+      value: https://dev-aws-backend-app-dthabehrajb6fpbm.westus2-01.azurewebsites.net
+    - name: accessToken
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjU1MDMzYTBjLWE1NDEtNGQ3MS01NzAwLTA4ZGVjN2RlZDlkNiIsIm5hbWUiOiJBbnNodSBKaGFsYW5pIiwiYWlycG9ydF9pZCI6IjdjYjBkN2Y5LThiNTAtZjExMS04ZmNiLTAwMGQzYWY1NjUzZCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkZ1bGxBY2Nlc3MiLCJqdGkiOiJjZWRmZTZiMC0xNTU1LTQwMmQtOTdiMC1kMzhiODFkNTE5NGQiLCJpYXQiOjE3ODE0OTcyMTEsImV4cCI6MTc4MTY3MDAxMSwiaXNzIjoiQXdzIiwiYXVkIjoiQXdzLVNjcmVlbmVyLUFwcCJ9.rVU2CnG4ycwJf4bUL22KIks6vkjM7Dr61E5b7WUaBqI
+    - name: refreshToken
+      value: ""
+
+docs:
+  content: |-
+    Postman collection generated from AeroSuite.AWS API Swagger spec
+    Source: https://dev-aws-backend-app-dthabehrajb6fpbm.westus2-01.azurewebsites.net/swagger/index.html
+  type: text/markdown
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git

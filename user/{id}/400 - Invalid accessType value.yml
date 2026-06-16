@@ -1,0 +1,36 @@
+info:
+  name: 400 / Invalid accessType value
+  type: http
+  seq: 9
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/api/v1/users/:id"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: ""
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "airportId": "7CB0D7F9-8B50-F111-8FCB-000D3AF5653D",
+        "firstName": "Alice",
+        "lastName": "Morgan",
+        "email": "alice@lawa.org",
+        "department": "Operations",
+        "position": "Admin",
+        "accessType": "InvalidRoleXYZ"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

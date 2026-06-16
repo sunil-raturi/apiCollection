@@ -1,0 +1,71 @@
+info:
+  name: DELETE {id}
+  type: http
+  seq: 11
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/api/v1/users/:id"
+  headers:
+    - name: Authorization
+      value: Bearer {{accessToken}}
+  params:
+    - name: id
+      value: e24400b0-8c50-f111-8fcb-000d3af5653d
+      type: path
+  auth: inherit
+
+runtime:
+  scripts:
+    - type: after-response
+      code: "const response = res.getBody();\r
+
+        \r
+
+        test(\"Status code is 200\", function () {\r
+
+        \    expect(res.getStatus()).to.equal(200);\r
+
+        });\r
+
+        \r
+
+        test(\"Response time is less than 3 sec\", function () {\r
+
+        \    expect(res.getResponseTime()).to.be.below(3000);\r
+
+        });\r
+
+        \r
+
+        test(\"Success should be true\", function () {\r
+
+        \    expect(response.success).to.eql(true);\r
+
+        });\r
+
+        \r
+
+        test(\"Message should be present\", function () {\r
+
+        \    expect(response.message).to.not.be.empty;\r
+
+        });\r
+
+        \r
+
+        test(\"Errors should be empty\", function () {\r
+
+        \    if(response.errors){\r
+
+        \        expect(response.errors.length).to.eql(0);\r
+
+        \    }\r
+
+        });"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
